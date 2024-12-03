@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\pegawaiController;
 use App\Http\Controllers\pelangganController;
+use App\Http\Controllers\stokController;
 use App\Http\Controllers\suplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,12 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
     /**
      * Ini route Stok
      */
+    Route::controller(stokController::class)->group(function(){
+        Route::get('/stok', 'index');
 
+        Route::get('/stok/add', 'create');
+
+    });
 
 
     /**
@@ -57,7 +63,18 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
     /**
      * ini route pelanggan
      */
+    Route::controller(pelangganController::class)->group(function(){
+        Route::get('/pelanggan', 'index');
 
+        Route::get('/pelanggan/add', 'create');
+        Route::post('/pelanggan/add', 'store');
+
+        Route::get('/pelanggan/edit/{id}', 'edit');
+        Route::post('/pelanggan/edit/{id}', 'update');
+
+        Route::get('/pelanggan/{id}', 'destroy');
+
+    });
 
     /**
      * ini route suplier
@@ -73,18 +90,6 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
         
         Route::get('/suplier/{id}', 'destroy');
     });
-
-    Route::controller(pelangganController::class)->group(function(){
-        Route::get('/pelanggan', 'index');
-
-        Route::get('/pelanggan/add', 'create');
-        Route::post('/pelanggan/add', 'store');
-
-        Route::get('/pelanggan/edit/{id}', 'edit');
-        Route::post('/pelanggan/edit/{id}', 'update');
-        
-    });
-
 
 
 
