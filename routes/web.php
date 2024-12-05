@@ -46,6 +46,7 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
         Route::get('/stok', 'index');
 
         Route::get('/stok/add', 'create');
+        Route::post('/stok/add', 'store')->name('saveStok');
 
     });
 
