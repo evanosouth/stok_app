@@ -22,7 +22,7 @@ class suplierController extends Controller
             'telp', 
             'like',
             "%{$search}%"
-        )->paginate();
+        )->paginate(5);
 
         return view('Suplier.suplier', compact(
             'data'
