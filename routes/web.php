@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\barangMasukController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\pegawaiController;
 use App\Http\Controllers\pelangganController;
@@ -13,18 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'index']);
 Route::post('/', [AuthController::class, 'login_proses']);
 
-Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
-
-    /**
-     * ini routing tombol logout!!!
-     */
-    Route::get('/logout', [AuthController::class, 'logout']);
-
-    /**
-     * ini Routing dashboard Controller
-     */
-    Route::get('/dashboard', [dashboardController::class, 'index']);
-
+Route::middleware(['auth', 'cekLevel:superadmin'])->group(function(){
+    
     /**
      * Ini Routing untuk pegawai controller
      */
@@ -39,6 +30,21 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
         Route::get('/pegawai/{id}', 'destroy');
     });
 
+});
+
+
+Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
+    /**
+     * ini routing tombol logout!!!
+     */
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+    /**
+     * ini Routing dashboard Controller
+     */
+    Route::get('/dashboard', [dashboardController::class, 'index']);
+
+   
     /**
      * Ini route Stok
      */
@@ -57,7 +63,13 @@ Route::middleware(['auth', 'cekLevel:superadmin,admin'])->group(function(){
     /**
      * ini route barang masuk
      */
+    Route::controller(barangMasukController::class)->group(function(){
 
+        Route::get('/barang-masuk', 'index');
+
+        Route::get('/barang-masuk/add', 'create');
+
+    });
 
     /**
      * ini route barang keluar
