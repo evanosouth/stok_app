@@ -16,4 +16,6 @@ class stok extends Model
     {
         return $this->belongsTo(suplier::class, 'suplier_id', 'id');
     }
+
+    
 }
